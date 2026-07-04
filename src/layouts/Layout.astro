@@ -8,12 +8,13 @@ interface Props {
 }
 
 const { title, description, canonicalPath = '/' } = Astro.props;
-const siteUrl = Astro.site?.toString() ?? 'https://toprmrproducer.github.io/wordtally/';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+const siteRoot = Astro.site?.toString() ?? 'https://toprmrproducer.github.io/';
+const siteBase = new URL(base, siteRoot).toString();
 const canonical = new URL(
 	canonicalPath.replace(/^\//, ''),
-	siteUrl
+	siteBase
 ).toString();
-const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 ---
 
 <!doctype html>
