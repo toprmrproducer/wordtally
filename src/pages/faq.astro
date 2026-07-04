@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const faqs = [
+	{
+		q: 'Is WordTally free to use?',
+		a: 'Yes. WordTally is completely free, with no signup, no account, and no usage limits.',
+	},
+	{
+		q: 'Does my text get uploaded anywhere?',
+		a: 'No. All counting happens locally in your browser using JavaScript. Your text is never sent to a server.',
+	},
+	{
+		q: 'How is reading time calculated?',
+		a: 'Reading time is estimated at 200 words per minute, a commonly used average adult silent-reading speed. Speaking time is estimated at 130 words per minute, a typical spoken presentation pace.',
+	},
+	{
+		q: 'What counts as a "sentence"?',
+		a: 'WordTally counts sentence-ending punctuation (periods, question marks, and exclamation points) to estimate sentence count. Abbreviations or unusual punctuation may occasionally affect accuracy slightly.',
+	},
+	{
+		q: 'What is keyword density?',
+		a: 'Keyword density shows your top 5 most-repeated meaningful words as a percentage of your total countable words, excluding common stopwords like "the", "a", and "is".',
+	},
+	{
+		q: 'Does WordTally work on mobile?',
+		a: 'Yes. WordTally is fully responsive and works on phones, tablets, and desktop browsers.',
+	},
+	{
+		q: 'Is there a word or character limit?',
+		a: 'No hard limit is enforced. Since everything runs in your browser, very large documents may feel slightly slower depending on your device, but typical documents, essays, and articles work instantly.',
+	},
+];
+---
+
+<Layout
+	title="FAQ — WordTally"
+	description="Frequently asked questions about WordTally, the free live word, character, and sentence counter."
+	canonicalPath="/faq"
+>
+	<section class="mx-auto max-w-2xl">
+		<h1 class="text-4xl font-bold tracking-tight text-[#2B2013] sm:text-5xl">
+			Frequently asked questions
+		</h1>
+
+		<div class="mt-10 space-y-6">
+			{faqs.map((item) => (
+				<div class="rounded-xl border border-[#E8DFC8] bg-white p-6 shadow-sm">
+					<h2 class="text-lg font-semibold text-[#2B2013]">{item.q}</h2>
+					<p class="mt-2 text-base leading-relaxed text-[#5C4F3D]">{item.a}</p>
+				</div>
+			))}
+		</div>
+	</section>
+</Layout>

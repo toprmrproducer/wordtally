@@ -1,0 +1,351 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
+---
+
+<Layout
+	title="WordTally — Live Word & Character Counter"
+	description="Free live word counter. Instantly count words, characters, sentences, and paragraphs, estimate reading and speaking time, and see keyword density — no signup, 100% client-side."
+	canonicalPath="/"
+>
+	<section class="text-center">
+		<h1 class="text-4xl font-bold tracking-tight text-[#2B2013] sm:text-5xl">
+			Word, character &amp; sentence <span class="text-[#C9982E]">tally</span>
+		</h1>
+		<p class="mx-auto mt-4 max-w-2xl text-lg text-[#5C4F3D]">
+			Paste or type your text to see live word, character, and sentence
+			counts, reading time, and keyword density.
+		</p>
+	</section>
+
+	<section class="mx-auto mt-10 max-w-2xl text-sm leading-relaxed text-[#5C4F3D]/80">
+		<p>
+			Stats update as you type. Reading time is estimated at
+			<strong class="text-[#2B2013]">200 words per minute</strong>, and
+			speaking time at
+			<strong class="text-[#2B2013]">130 words per minute</strong>. Keyword
+			density shows the top 5 most-repeated words, excluding common
+			stopwords like &ldquo;the&rdquo;, &ldquo;a&rdquo;, and
+			&ldquo;is&rdquo;. Everything runs instantly in your browser; nothing
+			you type is ever sent anywhere.
+		</p>
+	</section>
+
+	<section class="mx-auto mt-10 max-w-3xl">
+		<textarea
+			id="text-input"
+			rows="12"
+			placeholder="Start typing or paste your text here..."
+			class="w-full resize-y rounded-xl border border-[#E8DFC8] bg-white p-5 text-base leading-relaxed text-[#2B2013] placeholder:text-[#5C4F3D]/40 shadow-sm focus:border-[#C9982E] focus:outline-none focus:ring-1 focus:ring-[#C9982E]"
+		></textarea>
+
+		<div class="mt-3 flex justify-end">
+			<button
+				id="clear-btn"
+				type="button"
+				class="rounded-lg border border-[#E8DFC8] bg-white px-4 py-2 text-sm font-semibold text-[#5C4F3D] transition hover:border-[#C9982E] hover:text-[#B8860B]"
+			>
+				Clear
+			</button>
+		</div>
+
+		<!-- Primary stats -->
+		<div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 text-center shadow-sm">
+				<p id="stat-words" class="font-display text-3xl font-bold tracking-tight text-[#2B2013]">
+					0
+				</p>
+				<p class="mt-1 text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+					Words
+				</p>
+			</div>
+			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 text-center shadow-sm">
+				<p
+					id="stat-chars-with-spaces"
+					class="font-display text-3xl font-bold tracking-tight text-[#2B2013]"
+				>
+					0
+				</p>
+				<p class="mt-1 text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+					Characters
+				</p>
+			</div>
+			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 text-center shadow-sm">
+				<p id="stat-sentences" class="font-display text-3xl font-bold tracking-tight text-[#2B2013]">
+					0
+				</p>
+				<p class="mt-1 text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+					Sentences
+				</p>
+			</div>
+			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 text-center shadow-sm">
+				<p id="stat-paragraphs" class="font-display text-3xl font-bold tracking-tight text-[#2B2013]">
+					0
+				</p>
+				<p class="mt-1 text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+					Paragraphs
+				</p>
+			</div>
+		</div>
+
+		<!-- Secondary stats -->
+		<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 shadow-sm">
+				<p class="text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+					Characters (no spaces)
+				</p>
+				<p
+					id="stat-chars-no-spaces"
+					class="mt-1 text-xl font-semibold text-[#2B2013]"
+				>
+					0
+				</p>
+			</div>
+			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 shadow-sm">
+				<p class="text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+					Reading time
+				</p>
+				<p id="stat-reading-time" class="mt-1 text-xl font-semibold text-[#2B2013]">
+					0 sec
+				</p>
+			</div>
+			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 shadow-sm">
+				<p class="text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+					Speaking time
+				</p>
+				<p id="stat-speaking-time" class="mt-1 text-xl font-semibold text-[#2B2013]">
+					0 sec
+				</p>
+			</div>
+		</div>
+
+		<!-- Keyword density -->
+		<div class="mt-10">
+			<h2 class="text-sm font-medium text-[#5C4F3D]">
+				Keyword density
+				<span class="font-normal text-[#5C4F3D]/50">(top 5 words)</span>
+			</h2>
+			<div
+				id="keyword-empty"
+				class="mt-3 rounded-xl border border-dashed border-[#E8DFC8] p-6 text-center text-sm text-[#5C4F3D]/50"
+			>
+				Start typing to see your most-used keywords.
+			</div>
+			<div id="keyword-list" class="mt-3 hidden flex-col gap-2"></div>
+		</div>
+	</section>
+
+	<section class="mx-auto mt-16 max-w-3xl border-t border-[#E8DFC8] pt-8 text-center text-sm text-[#5C4F3D]/70">
+		<p>
+			Learn more <a href={`${base}about`} class="font-medium text-[#C9982E] transition hover:text-[#B8860B]">about WordTally</a>,
+			read our <a href={`${base}privacy`} class="font-medium text-[#C9982E] transition hover:text-[#B8860B]">privacy policy</a>,
+			or check the <a href={`${base}faq`} class="font-medium text-[#C9982E] transition hover:text-[#B8860B]">FAQ</a>.
+		</p>
+	</section>
+
+	<script>
+		const STOPWORDS = new Set([
+			'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an',
+			'and', 'any', 'are', "aren't", 'as', 'at', 'be', 'because', 'been',
+			'before', 'being', 'below', 'between', 'both', 'but', 'by', "can't",
+			'cannot', 'could', "couldn't", 'did', "didn't", 'do', 'does', "doesn't",
+			'doing', "don't", 'down', 'during', 'each', 'few', 'for', 'from',
+			'further', 'had', "hadn't", 'has', "hasn't", 'have', "haven't",
+			'having', 'he', "he'd", "he'll", "he's", 'her', 'here', "here's",
+			'hers', 'herself', 'him', 'himself', 'his', 'how', "how's", 'i',
+			"i'd", "i'll", "i'm", "i've", 'if', 'in', 'into', 'is', "isn't",
+			'it', "it's", 'its', 'itself', "let's", 'me', 'more', 'most',
+			"mustn't", 'my', 'myself', 'no', 'nor', 'not', 'of', 'off', 'on',
+			'once', 'only', 'or', 'other', 'ought', 'our', 'ours', 'ourselves',
+			'out', 'over', 'own', 'same', "shan't", 'she', "she'd", "she'll",
+			"she's", 'should', "shouldn't", 'so', 'some', 'such', 'than',
+			'that', "that's", 'the', 'their', 'theirs', 'them', 'themselves',
+			'then', 'there', "there's", 'these', 'they', "they'd", "they'll",
+			"they're", "they've", 'this', 'those', 'through', 'to', 'too',
+			'under', 'until', 'up', 'very', 'was', "wasn't", 'we', "we'd",
+			"we'll", "we're", "we've", 'were', "weren't", 'what', "what's",
+			'when', "when's", 'where', "where's", 'which', 'while', 'who',
+			"who's", 'whom', 'why', "why's", 'with', "won't", 'would',
+			"wouldn't", 'you', "you'd", "you'll", "you're", "you've", 'your',
+			'yours', 'yourself', 'yourselves',
+		]);
+
+		// Standing security requirement: any user-controlled text rendered via
+		// innerHTML (or inserted as text into markup we control) goes through
+		// this escape helper first.
+		const escapeHtml = (value: string): string =>
+			value
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.replace(/'/g, '&#39;');
+
+		const textInput = document.getElementById('text-input') as HTMLTextAreaElement;
+		const clearBtn = document.getElementById('clear-btn') as HTMLButtonElement;
+
+		const statWords = document.getElementById('stat-words') as HTMLParagraphElement;
+		const statCharsWithSpaces = document.getElementById(
+			'stat-chars-with-spaces',
+		) as HTMLParagraphElement;
+		const statCharsNoSpaces = document.getElementById(
+			'stat-chars-no-spaces',
+		) as HTMLParagraphElement;
+		const statSentences = document.getElementById(
+			'stat-sentences',
+		) as HTMLParagraphElement;
+		const statParagraphs = document.getElementById(
+			'stat-paragraphs',
+		) as HTMLParagraphElement;
+		const statReadingTime = document.getElementById(
+			'stat-reading-time',
+		) as HTMLParagraphElement;
+		const statSpeakingTime = document.getElementById(
+			'stat-speaking-time',
+		) as HTMLParagraphElement;
+
+		const keywordEmpty = document.getElementById(
+			'keyword-empty',
+		) as HTMLDivElement;
+		const keywordList = document.getElementById('keyword-list') as HTMLDivElement;
+
+		const formatDuration = (totalSeconds: number): string => {
+			const seconds = Math.round(totalSeconds);
+			if (seconds < 60) {
+				return `${seconds} sec`;
+			}
+			const minutes = Math.floor(seconds / 60);
+			const remainingSeconds = seconds % 60;
+			if (remainingSeconds === 0) {
+				return `${minutes} min`;
+			}
+			return `${minutes} min ${remainingSeconds} sec`;
+		};
+
+		const countSentences = (text: string): number => {
+			const trimmed = text.trim();
+			if (trimmed === '') return 0;
+			const matches = trimmed.match(/[^.!?]+[.!?]+|\S+$/g);
+			return matches ? matches.length : 0;
+		};
+
+		const countParagraphs = (text: string): number => {
+			const trimmed = text.trim();
+			if (trimmed === '') return 0;
+			const blocks = trimmed.split(/\n\s*\n+/).filter((block) => block.trim() !== '');
+			return blocks.length > 0 ? blocks.length : 1;
+		};
+
+		const getWords = (text: string): string[] => {
+			const trimmed = text.trim();
+			if (trimmed === '') return [];
+			return trimmed.split(/\s+/).filter((w) => w.length > 0);
+		};
+
+		const getKeywordDensity = (
+			words: string[],
+		): { word: string; count: number; percent: number }[] => {
+			const counts = new Map<string, number>();
+			let totalCountableWords = 0;
+
+			for (const rawWord of words) {
+				const cleaned = rawWord.toLowerCase().replace(/[^a-z0-9']/g, '');
+				if (cleaned === '' || STOPWORDS.has(cleaned)) continue;
+				totalCountableWords += 1;
+				counts.set(cleaned, (counts.get(cleaned) ?? 0) + 1);
+			}
+
+			if (totalCountableWords === 0) return [];
+
+			return Array.from(counts.entries())
+				.map(([word, count]) => ({
+					word,
+					count,
+					percent: (count / totalCountableWords) * 100,
+				}))
+				.sort((a, b) => b.count - a.count)
+				.slice(0, 5);
+		};
+
+		const renderKeywords = (
+			keywords: { word: string; count: number; percent: number }[],
+		) => {
+			if (keywords.length === 0) {
+				keywordEmpty.classList.remove('hidden');
+				keywordList.classList.add('hidden');
+				keywordList.classList.remove('flex');
+				keywordList.innerHTML = '';
+				return;
+			}
+
+			keywordEmpty.classList.add('hidden');
+			keywordList.classList.remove('hidden');
+			keywordList.classList.add('flex');
+			keywordList.innerHTML = '';
+
+			const maxCount = keywords[0].count;
+
+			keywords.forEach(({ word, count, percent }) => {
+				const row = document.createElement('div');
+				row.className =
+					'flex items-center gap-4 rounded-lg border border-[#E8DFC8] bg-[#FAF6EC] px-4 py-3';
+
+				const label = document.createElement('span');
+				label.className = 'w-28 shrink-0 truncate text-sm font-medium text-[#2B2013]';
+				// Word originates from user-typed text: escape before assigning,
+				// even though textContent is already safe — kept consistent with
+				// the family-wide escapeHtml() standard.
+				label.textContent = escapeHtml(word);
+
+				const barTrack = document.createElement('div');
+				barTrack.className = 'h-2 flex-1 overflow-hidden rounded-full bg-[#E8DFC8]';
+
+				const barFill = document.createElement('div');
+				barFill.className = 'h-full rounded-full bg-[#C9982E]';
+				const widthPercent = Math.max((count / maxCount) * 100, 6);
+				barFill.style.width = `${widthPercent}%`;
+				barTrack.appendChild(barFill);
+
+				const value = document.createElement('span');
+				value.className = 'w-24 shrink-0 text-right text-xs text-[#5C4F3D]/70';
+				value.textContent = `${count} (${percent.toFixed(1)}%)`;
+
+				row.appendChild(label);
+				row.appendChild(barTrack);
+				row.appendChild(value);
+				keywordList.appendChild(row);
+			});
+		};
+
+		const updateStats = () => {
+			const text = textInput.value;
+			const words = getWords(text);
+			const wordCount = words.length;
+
+			statWords.textContent = wordCount.toLocaleString();
+			statCharsWithSpaces.textContent = text.length.toLocaleString();
+			statCharsNoSpaces.textContent = text
+				.replace(/\s/g, '')
+				.length.toLocaleString();
+			statSentences.textContent = countSentences(text).toLocaleString();
+			statParagraphs.textContent = countParagraphs(text).toLocaleString();
+
+			const readingSeconds = (wordCount / 200) * 60;
+			const speakingSeconds = (wordCount / 130) * 60;
+			statReadingTime.textContent = formatDuration(readingSeconds);
+			statSpeakingTime.textContent = formatDuration(speakingSeconds);
+
+			renderKeywords(getKeywordDensity(words));
+		};
+
+		textInput.addEventListener('input', updateStats);
+
+		clearBtn.addEventListener('click', () => {
+			textInput.value = '';
+			textInput.focus();
+			updateStats();
+		});
+
+		updateStats();
+	</script>
+</Layout>
