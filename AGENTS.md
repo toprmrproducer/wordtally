@@ -29,21 +29,25 @@ own standalone project under `~/iCloud/website/<tool-name>/`.
 
 | Token | Value | Use |
 |---|---|---|
-| Background | `#FAF6EC` | page background (warm cream) |
-| Surface | `#FFFFFF` | cards |
-| Border | `#E8DFC8` | warm border on all cards/inputs (never gray) |
-| Heading text | `#2B2013` | warm espresso brown |
-| Body text | `#5C4F3D` | warm brown-gray |
-| Accent | `#C9982E` | links, CTAs, active/focus states |
-| Accent hover | `#B8860B` | darker gold on hover |
+| Page background | `#ffffff` | page background (white, never dark) |
+| Panel/surface | `#faf8f3` | cards, textarea, panels (barely-warm off-white) |
+| Border | `#eae4d6` | warm border on all cards/inputs (never gray) |
+| Heading text | `#221b10` | warm near-black |
+| Body text | `#4a4234` | warm brown |
+| Muted text | `#8a7e68` | captions, labels |
+| Accent | `#c9982e` | links, CTAs, active/focus states (gold) |
+| Accent hover | `#b8860b` | darker gold on hover |
 
-- Headings: **Fraunces** (soft-serif/display), weight 600-700, slightly
-  negative letter-spacing. Loaded via Google Fonts `<link>` in
-  `Layout.astro` head with `display=swap`.
-- Body/UI/buttons: **Inter**.
-- Rounded-xl corners, soft shadows only (`shadow-sm`), no gradients, no
-  dark mode. Cream-only aesthetic is intentional — do not add a theme
-  toggle or dark variant.
+- Headings: **Sora** (display), weight 700/800, negative letter-spacing.
+- Body/UI/buttons: **Manrope**, weights 400-800. Both loaded via one
+  Google Fonts `<link>` in `Layout.astro` head with `display=swap`.
+- Body 17px / labels 15px, generous spacing. Rounded-2xl corners, soft
+  shadows only (`shadow-sm`), no gradients, no dark mode. Light white
+  aesthetic is intentional — do not add a theme toggle or dark variant.
+- Ad-ready layout: `<main>` is hard-capped and centered at `max-w-[820px]`
+  with wide left/right gutters; reserved invisible AdSense slots
+  (leaderboard, L/R sticky skyscrapers >=1280px, in-article) sit in the
+  gutters/top/bottom and stay silent until a real `<ins>` is dropped in.
 - Should read as a small, confident, premium product — not a generic
   free-tool dump.
 

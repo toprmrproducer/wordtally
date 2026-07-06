@@ -4,19 +4,19 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout
 	title="About — WordTally"
-	description="WordTally is a small, focused, client-side word and character counter. Learn what it does and why it's built this way."
+	description="WordTally is a small, focused, client-side word, character, and readability counter. Learn what it does and why it's built this way."
 	canonicalPath="/about"
 >
 	<section class="mx-auto max-w-2xl">
-		<h1 class="text-4xl font-bold tracking-tight text-[#2B2013] sm:text-5xl">
+		<h1 class="text-4xl font-extrabold tracking-tight text-[#221b10] sm:text-5xl">
 			About WordTally
 		</h1>
 
-		<div class="mt-8 space-y-5 text-base leading-relaxed text-[#5C4F3D]">
+		<div class="mt-8 space-y-5 text-lg leading-relaxed text-[#4a4234]">
 			<p>
 				WordTally is a single-purpose writing tool: a live word, character,
-				and sentence counter with reading time, speaking time, and keyword
-				density, all in one clean page.
+				and sentence counter with reading time, speaking time, a Flesch
+				readability score, and keyword density, all in one clean page.
 			</p>
 			<p>
 				We built it deliberately small. Rather than bundling dozens of
@@ -32,10 +32,13 @@ import Layout from '../layouts/Layout.astro';
 			<p>
 				Reading time is calculated at 200 words per minute and speaking time
 				at 130 words per minute &mdash; both commonly used averages for adult
-				reading and presentation pacing. Keyword density highlights your top
-				5 most-used meaningful words, filtering out common stopwords like
-				&ldquo;the&rdquo;, &ldquo;and&rdquo;, and &ldquo;is&rdquo; so you can
-				see what your writing actually emphasizes.
+				reading and presentation pacing. The readability score uses the
+				Flesch Reading Ease formula with an estimated Flesch-Kincaid grade
+				level, so you can see roughly how demanding your writing is to read.
+				Keyword density highlights your top 10 most-used meaningful words,
+				filtering out common stopwords like &ldquo;the&rdquo;,
+				&ldquo;and&rdquo;, and &ldquo;is&rdquo; so you can see what your
+				writing actually emphasizes.
 			</p>
 			<p>
 				WordTally is free to use, with no signup required.

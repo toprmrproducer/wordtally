@@ -4,46 +4,53 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 ---
 
 <Layout
-	title="WordTally — Live Word & Character Counter"
-	description="Free live word counter. Instantly count words, characters, sentences, and paragraphs, estimate reading and speaking time, and see keyword density — no signup, 100% client-side."
+	title="WordTally — Live Word, Character & Readability Counter"
+	description="Free live word counter. Instantly count words, characters, sentences, and paragraphs, estimate reading and speaking time, and see a Flesch reading-ease score and top-10 keyword density — no signup, 100% client-side."
 	canonicalPath="/"
 >
 	<section class="text-center">
-		<h1 class="text-4xl font-bold tracking-tight text-[#2B2013] sm:text-5xl">
-			Word, character &amp; sentence <span class="text-[#C9982E]">tally</span>
+		<h1 class="text-4xl font-extrabold tracking-tight text-[#221b10] sm:text-5xl">
+			Word, character &amp; readability <span class="text-[#c9982e]">tally</span>
 		</h1>
-		<p class="mx-auto mt-4 max-w-2xl text-lg text-[#5C4F3D]">
+		<p class="mx-auto mt-5 max-w-2xl text-lg text-[#4a4234]">
 			Paste or type your text to see live word, character, and sentence
-			counts, reading time, and keyword density.
+			counts, reading time, a Flesch readability score, and keyword density.
 		</p>
 	</section>
 
-	<section class="mx-auto mt-10 max-w-2xl text-sm leading-relaxed text-[#5C4F3D]/80">
+	<section class="mx-auto mt-8 max-w-2xl text-[15px] leading-relaxed text-[#8a7e68]">
 		<p>
 			Stats update as you type. Reading time is estimated at
-			<strong class="text-[#2B2013]">200 words per minute</strong>, and
+			<strong class="text-[#221b10]">200 words per minute</strong>, and
 			speaking time at
-			<strong class="text-[#2B2013]">130 words per minute</strong>. Keyword
-			density shows the top 5 most-repeated words, excluding common
-			stopwords like &ldquo;the&rdquo;, &ldquo;a&rdquo;, and
-			&ldquo;is&rdquo;. Everything runs instantly in your browser; nothing
-			you type is ever sent anywhere.
+			<strong class="text-[#221b10]">130 words per minute</strong>. The
+			readability score uses the Flesch Reading Ease formula, and keyword
+			density shows your most-repeated words, excluding common stopwords like
+			&ldquo;the&rdquo;, &ldquo;a&rdquo;, and &ldquo;is&rdquo;. Everything runs
+			instantly in your browser; nothing you type is ever sent anywhere.
 		</p>
 	</section>
 
-	<section class="mx-auto mt-10 max-w-3xl">
+	<section class="mx-auto mt-10 w-full">
 		<textarea
 			id="text-input"
 			rows="12"
 			placeholder="Start typing or paste your text here..."
-			class="w-full resize-y rounded-xl border border-[#E8DFC8] bg-white p-5 text-base leading-relaxed text-[#2B2013] placeholder:text-[#5C4F3D]/40 shadow-sm focus:border-[#C9982E] focus:outline-none focus:ring-1 focus:ring-[#C9982E]"
+			class="w-full resize-y rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 text-base leading-relaxed text-[#221b10] placeholder:text-[#8a7e68]/60 shadow-sm focus:border-[#c9982e] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#c9982e]"
 		></textarea>
 
-		<div class="mt-3 flex justify-end">
+		<div class="mt-3 flex flex-wrap items-center justify-end gap-3">
+			<button
+				id="copy-btn"
+				type="button"
+				class="rounded-lg bg-[#c9982e] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#b8860b]"
+			>
+				Copy stats
+			</button>
 			<button
 				id="clear-btn"
 				type="button"
-				class="rounded-lg border border-[#E8DFC8] bg-white px-4 py-2 text-sm font-semibold text-[#5C4F3D] transition hover:border-[#C9982E] hover:text-[#B8860B]"
+				class="rounded-lg border border-[#eae4d6] bg-white px-4 py-2 text-sm font-semibold text-[#4a4234] transition hover:border-[#c9982e] hover:text-[#b8860b]"
 			>
 				Clear
 			</button>
@@ -51,38 +58,38 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 
 		<!-- Primary stats -->
 		<div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 text-center shadow-sm">
-				<p id="stat-words" class="font-display text-3xl font-bold tracking-tight text-[#2B2013]">
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 text-center shadow-sm">
+				<p id="stat-words" class="font-display text-3xl font-extrabold tracking-tight text-[#221b10]">
 					0
 				</p>
-				<p class="mt-1 text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+				<p class="mt-1 text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
 					Words
 				</p>
 			</div>
-			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 text-center shadow-sm">
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 text-center shadow-sm">
 				<p
 					id="stat-chars-with-spaces"
-					class="font-display text-3xl font-bold tracking-tight text-[#2B2013]"
+					class="font-display text-3xl font-extrabold tracking-tight text-[#221b10]"
 				>
 					0
 				</p>
-				<p class="mt-1 text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+				<p class="mt-1 text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
 					Characters
 				</p>
 			</div>
-			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 text-center shadow-sm">
-				<p id="stat-sentences" class="font-display text-3xl font-bold tracking-tight text-[#2B2013]">
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 text-center shadow-sm">
+				<p id="stat-sentences" class="font-display text-3xl font-extrabold tracking-tight text-[#221b10]">
 					0
 				</p>
-				<p class="mt-1 text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+				<p class="mt-1 text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
 					Sentences
 				</p>
 			</div>
-			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 text-center shadow-sm">
-				<p id="stat-paragraphs" class="font-display text-3xl font-bold tracking-tight text-[#2B2013]">
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 text-center shadow-sm">
+				<p id="stat-paragraphs" class="font-display text-3xl font-extrabold tracking-tight text-[#221b10]">
 					0
 				</p>
-				<p class="mt-1 text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+				<p class="mt-1 text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
 					Paragraphs
 				</p>
 			</div>
@@ -90,56 +97,131 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 
 		<!-- Secondary stats -->
 		<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 shadow-sm">
-				<p class="text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 shadow-sm">
+				<p class="text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
 					Characters (no spaces)
 				</p>
 				<p
 					id="stat-chars-no-spaces"
-					class="mt-1 text-xl font-semibold text-[#2B2013]"
+					class="mt-1 text-xl font-bold text-[#221b10]"
 				>
 					0
 				</p>
 			</div>
-			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 shadow-sm">
-				<p class="text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 shadow-sm">
+				<p class="text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
 					Reading time
 				</p>
-				<p id="stat-reading-time" class="mt-1 text-xl font-semibold text-[#2B2013]">
+				<p id="stat-reading-time" class="mt-1 text-xl font-bold text-[#221b10]">
 					0 sec
 				</p>
 			</div>
-			<div class="rounded-xl border border-[#E8DFC8] bg-white p-5 shadow-sm">
-				<p class="text-xs font-medium tracking-wide text-[#5C4F3D]/70 uppercase">
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 shadow-sm">
+				<p class="text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
 					Speaking time
 				</p>
-				<p id="stat-speaking-time" class="mt-1 text-xl font-semibold text-[#2B2013]">
+				<p id="stat-speaking-time" class="mt-1 text-xl font-bold text-[#221b10]">
 					0 sec
 				</p>
 			</div>
 		</div>
 
-		<!-- Keyword density -->
+		<!-- Readability (niche feature) -->
+		<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 shadow-sm">
+				<p class="text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
+					Reading ease (Flesch)
+				</p>
+				<p id="stat-flesch" class="mt-1 text-xl font-bold text-[#221b10]">
+					&mdash;
+				</p>
+			</div>
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 shadow-sm">
+				<p class="text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
+					Grade level
+				</p>
+				<p id="stat-grade" class="mt-1 text-xl font-bold text-[#221b10]">
+					&mdash;
+				</p>
+			</div>
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5 shadow-sm">
+				<p class="text-xs font-semibold tracking-wide text-[#8a7e68] uppercase">
+					Readability
+				</p>
+				<p id="stat-readability-label" class="mt-1 text-xl font-bold text-[#221b10]">
+					&mdash;
+				</p>
+			</div>
+		</div>
+
+		<!-- Keyword density (niche feature: top-10 table) -->
 		<div class="mt-10">
-			<h2 class="text-sm font-medium text-[#5C4F3D]">
+			<h2 class="text-base font-bold text-[#221b10]">
 				Keyword density
-				<span class="font-normal text-[#5C4F3D]/50">(top 5 words)</span>
+				<span class="font-medium text-[#8a7e68]">(top 10 words)</span>
 			</h2>
 			<div
 				id="keyword-empty"
-				class="mt-3 rounded-xl border border-dashed border-[#E8DFC8] p-6 text-center text-sm text-[#5C4F3D]/50"
+				class="mt-3 rounded-2xl border border-dashed border-[#eae4d6] p-6 text-center text-[15px] text-[#8a7e68]"
 			>
 				Start typing to see your most-used keywords.
 			</div>
-			<div id="keyword-list" class="mt-3 hidden flex-col gap-2"></div>
+			<div id="keyword-table-wrap" class="mt-3 hidden overflow-x-auto rounded-2xl border border-[#eae4d6]">
+				<table class="w-full border-collapse text-left text-sm">
+					<thead>
+						<tr class="bg-[#faf8f3] text-[13px] font-semibold uppercase tracking-wide text-[#8a7e68]">
+							<th class="px-4 py-3">#</th>
+							<th class="px-4 py-3">Keyword</th>
+							<th class="px-4 py-3 text-right">Count</th>
+							<th class="px-4 py-3 text-right">Density</th>
+							<th class="hidden px-4 py-3 sm:table-cell" style="width:40%">Share</th>
+						</tr>
+					</thead>
+					<tbody id="keyword-tbody"></tbody>
+				</table>
+			</div>
 		</div>
 	</section>
 
-	<section class="mx-auto mt-16 max-w-3xl border-t border-[#E8DFC8] pt-8 text-center text-sm text-[#5C4F3D]/70">
+	<!-- Snake boredom-filler (WordTally is a fast tool, so this sits near the bottom) -->
+	<section class="mx-auto mt-14 max-w-[820px]">
+		<details class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5">
+			<summary class="cursor-pointer select-none font-[Sora] text-lg font-bold text-[#221b10]">Bored? Play a quick game of Snake</summary>
+			<div class="mt-4 flex flex-col items-center gap-3">
+				<canvas id="snake-canvas" width="320" height="320" class="rounded-lg border border-[#eae4d6] bg-white" style="touch-action:none"></canvas>
+				<div class="flex items-center gap-4 text-sm text-[#4a4234]">
+					<span>Score: <b id="snake-score">0</b></span>
+					<button id="snake-restart" class="rounded-lg bg-[#c9982e] px-4 py-2 font-semibold text-white transition hover:bg-[#b8860b]">Restart</button>
+				</div>
+				<p class="text-xs text-[#8a7e68]">Arrow keys / WASD, or swipe on mobile.</p>
+			</div>
+		</details>
+	</section>
+
+	<!-- How it works -->
+	<section class="mx-auto mt-14 max-w-[820px]">
+		<h2 class="text-2xl font-bold text-[#221b10]">How WordTally works</h2>
+		<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5">
+				<p class="font-display text-lg font-bold text-[#221b10]">1. Type or paste</p>
+				<p class="mt-2 text-[15px] text-[#4a4234]">Drop any text into the box. Nothing leaves your browser.</p>
+			</div>
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5">
+				<p class="font-display text-lg font-bold text-[#221b10]">2. Read the counts</p>
+				<p class="mt-2 text-[15px] text-[#4a4234]">Words, characters, sentences, reading time, and readability update live.</p>
+			</div>
+			<div class="rounded-2xl border border-[#eae4d6] bg-[#faf8f3] p-5">
+				<p class="font-display text-lg font-bold text-[#221b10]">3. Copy your stats</p>
+				<p class="mt-2 text-[15px] text-[#4a4234]">One click copies a clean summary of every metric to your clipboard.</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="mx-auto mt-14 max-w-[820px] border-t border-[#eae4d6] pt-8 text-center text-[15px] text-[#8a7e68]">
 		<p>
-			Learn more <a href={`${base}about`} class="font-medium text-[#C9982E] transition hover:text-[#B8860B]">about WordTally</a>,
-			read our <a href={`${base}privacy`} class="font-medium text-[#C9982E] transition hover:text-[#B8860B]">privacy policy</a>,
-			or check the <a href={`${base}faq`} class="font-medium text-[#C9982E] transition hover:text-[#B8860B]">FAQ</a>.
+			Learn more <a href={`${base}about`} class="font-semibold text-[#c9982e] transition hover:text-[#b8860b]">about WordTally</a>,
+			read our <a href={`${base}privacy`} class="font-semibold text-[#c9982e] transition hover:text-[#b8860b]">privacy policy</a>,
+			or check the <a href={`${base}faq`} class="font-semibold text-[#c9982e] transition hover:text-[#b8860b]">FAQ</a>.
 		</p>
 	</section>
 
@@ -171,8 +253,10 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 		]);
 
 		// Standing security requirement: any user-controlled text rendered via
-		// innerHTML (or inserted as text into markup we control) goes through
-		// this escape helper first.
+		// innerHTML (or inserted into markup we control) goes through this escape
+		// helper first. Here we build the keyword table with createElement +
+		// textContent, which is already XSS-safe, but we route the word through
+		// escapeHtml to stay consistent with the family-wide standard.
 		const escapeHtml = (value: string): string =>
 			value
 				.replace(/&/g, '&amp;')
@@ -183,6 +267,7 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 
 		const textInput = document.getElementById('text-input') as HTMLTextAreaElement;
 		const clearBtn = document.getElementById('clear-btn') as HTMLButtonElement;
+		const copyBtn = document.getElementById('copy-btn') as HTMLButtonElement;
 
 		const statWords = document.getElementById('stat-words') as HTMLParagraphElement;
 		const statCharsWithSpaces = document.getElementById(
@@ -203,11 +288,21 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 		const statSpeakingTime = document.getElementById(
 			'stat-speaking-time',
 		) as HTMLParagraphElement;
+		const statFlesch = document.getElementById('stat-flesch') as HTMLParagraphElement;
+		const statGrade = document.getElementById('stat-grade') as HTMLParagraphElement;
+		const statReadabilityLabel = document.getElementById(
+			'stat-readability-label',
+		) as HTMLParagraphElement;
 
 		const keywordEmpty = document.getElementById(
 			'keyword-empty',
 		) as HTMLDivElement;
-		const keywordList = document.getElementById('keyword-list') as HTMLDivElement;
+		const keywordTableWrap = document.getElementById(
+			'keyword-table-wrap',
+		) as HTMLDivElement;
+		const keywordTbody = document.getElementById(
+			'keyword-tbody',
+		) as HTMLTableSectionElement;
 
 		const formatDuration = (totalSeconds: number): string => {
 			const seconds = Math.round(totalSeconds);
@@ -242,6 +337,62 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 			return trimmed.split(/\s+/).filter((w) => w.length > 0);
 		};
 
+		// Approximate syllable count for a single word. Heuristic, not a
+		// dictionary lookup — good enough for a live Flesch estimate.
+		const countSyllablesInWord = (word: string): number => {
+			const w = word.toLowerCase().replace(/[^a-z]/g, '');
+			if (w.length === 0) return 0;
+			if (w.length <= 3) return 1;
+			let cleaned = w
+				.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
+				.replace(/^y/, '');
+			const groups = cleaned.match(/[aeiouy]{1,2}/g);
+			const count = groups ? groups.length : 0;
+			return count > 0 ? count : 1;
+		};
+
+		const countSyllables = (words: string[]): number => {
+			let total = 0;
+			for (const word of words) {
+				total += countSyllablesInWord(word);
+			}
+			return total;
+		};
+
+		// Flesch Reading Ease: 206.835 - 1.015*(words/sentences) - 84.6*(syllables/words)
+		// Flesch-Kincaid Grade: 0.39*(words/sentences) + 11.8*(syllables/words) - 15.59
+		const getReadability = (
+			words: string[],
+			sentenceCount: number,
+		): { flesch: number; grade: number } | null => {
+			const wordCount = words.length;
+			if (wordCount === 0 || sentenceCount === 0) return null;
+			const syllables = countSyllables(words);
+			const wordsPerSentence = wordCount / sentenceCount;
+			const syllablesPerWord = syllables / wordCount;
+			const flesch = 206.835 - 1.015 * wordsPerSentence - 84.6 * syllablesPerWord;
+			const grade =
+				0.39 * wordsPerSentence + 11.8 * syllablesPerWord - 15.59;
+			return { flesch, grade };
+		};
+
+		const fleschLabel = (flesch: number): string => {
+			if (flesch >= 90) return 'Very easy';
+			if (flesch >= 70) return 'Easy';
+			if (flesch >= 60) return 'Plain';
+			if (flesch >= 50) return 'Fairly hard';
+			if (flesch >= 30) return 'Difficult';
+			return 'Very difficult';
+		};
+
+		const gradeLabel = (grade: number): string => {
+			const g = Math.max(0, Math.round(grade));
+			if (g <= 0) return 'Kindergarten';
+			if (g >= 16) return 'College grad';
+			if (g >= 13) return 'College';
+			return `Grade ${g}`;
+		};
+
 		const getKeywordDensity = (
 			words: string[],
 		): { word: string; count: number; percent: number }[] => {
@@ -264,7 +415,7 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 					percent: (count / totalCountableWords) * 100,
 				}))
 				.sort((a, b) => b.count - a.count)
-				.slice(0, 5);
+				.slice(0, 10);
 		};
 
 		const renderKeywords = (
@@ -272,70 +423,123 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 		) => {
 			if (keywords.length === 0) {
 				keywordEmpty.classList.remove('hidden');
-				keywordList.classList.add('hidden');
-				keywordList.classList.remove('flex');
-				keywordList.innerHTML = '';
+				keywordTableWrap.classList.add('hidden');
+				keywordTbody.innerHTML = '';
 				return;
 			}
 
 			keywordEmpty.classList.add('hidden');
-			keywordList.classList.remove('hidden');
-			keywordList.classList.add('flex');
-			keywordList.innerHTML = '';
+			keywordTableWrap.classList.remove('hidden');
+			keywordTbody.innerHTML = '';
 
 			const maxCount = keywords[0].count;
 
-			keywords.forEach(({ word, count, percent }) => {
-				const row = document.createElement('div');
-				row.className =
-					'flex items-center gap-4 rounded-lg border border-[#E8DFC8] bg-[#FAF6EC] px-4 py-3';
+			keywords.forEach(({ word, count, percent }, index) => {
+				const row = document.createElement('tr');
+				row.className = 'border-t border-[#eae4d6]';
 
-				const label = document.createElement('span');
-				label.className = 'w-28 shrink-0 truncate text-sm font-medium text-[#2B2013]';
-				// Word originates from user-typed text: escape before assigning,
-				// even though textContent is already safe — kept consistent with
-				// the family-wide escapeHtml() standard.
-				label.textContent = escapeHtml(word);
+				const rankCell = document.createElement('td');
+				rankCell.className = 'px-4 py-3 text-[#8a7e68]';
+				rankCell.textContent = String(index + 1);
 
+				const wordCell = document.createElement('td');
+				wordCell.className = 'px-4 py-3 font-semibold text-[#221b10]';
+				// Word originates from user-typed text. textContent is safe, and
+				// we route through escapeHtml to hold the family-wide standard.
+				wordCell.textContent = escapeHtml(word);
+
+				const countCell = document.createElement('td');
+				countCell.className = 'px-4 py-3 text-right text-[#4a4234]';
+				countCell.textContent = String(count);
+
+				const pctCell = document.createElement('td');
+				pctCell.className = 'px-4 py-3 text-right text-[#4a4234]';
+				pctCell.textContent = `${percent.toFixed(1)}%`;
+
+				const barCell = document.createElement('td');
+				barCell.className = 'hidden px-4 py-3 sm:table-cell';
 				const barTrack = document.createElement('div');
-				barTrack.className = 'h-2 flex-1 overflow-hidden rounded-full bg-[#E8DFC8]';
-
+				barTrack.className = 'h-2 w-full overflow-hidden rounded-full bg-[#eae4d6]';
 				const barFill = document.createElement('div');
-				barFill.className = 'h-full rounded-full bg-[#C9982E]';
+				barFill.className = 'h-full rounded-full bg-[#c9982e]';
 				const widthPercent = Math.max((count / maxCount) * 100, 6);
 				barFill.style.width = `${widthPercent}%`;
 				barTrack.appendChild(barFill);
+				barCell.appendChild(barTrack);
 
-				const value = document.createElement('span');
-				value.className = 'w-24 shrink-0 text-right text-xs text-[#5C4F3D]/70';
-				value.textContent = `${count} (${percent.toFixed(1)}%)`;
-
-				row.appendChild(label);
-				row.appendChild(barTrack);
-				row.appendChild(value);
-				keywordList.appendChild(row);
+				row.appendChild(rankCell);
+				row.appendChild(wordCell);
+				row.appendChild(countCell);
+				row.appendChild(pctCell);
+				row.appendChild(barCell);
+				keywordTbody.appendChild(row);
 			});
+		};
+
+		// Cache the latest computed metrics for the copy-stats button.
+		let lastStats = {
+			words: 0,
+			charsWithSpaces: 0,
+			charsNoSpaces: 0,
+			sentences: 0,
+			paragraphs: 0,
+			readingTime: '0 sec',
+			speakingTime: '0 sec',
+			flesch: '—',
+			grade: '—',
+			readability: '—',
 		};
 
 		const updateStats = () => {
 			const text = textInput.value;
 			const words = getWords(text);
 			const wordCount = words.length;
+			const sentenceCount = countSentences(text);
+			const paragraphCount = countParagraphs(text);
+			const charsWithSpaces = text.length;
+			const charsNoSpaces = text.replace(/\s/g, '').length;
 
 			statWords.textContent = wordCount.toLocaleString();
-			statCharsWithSpaces.textContent = text.length.toLocaleString();
-			statCharsNoSpaces.textContent = text
-				.replace(/\s/g, '')
-				.length.toLocaleString();
-			statSentences.textContent = countSentences(text).toLocaleString();
-			statParagraphs.textContent = countParagraphs(text).toLocaleString();
+			statCharsWithSpaces.textContent = charsWithSpaces.toLocaleString();
+			statCharsNoSpaces.textContent = charsNoSpaces.toLocaleString();
+			statSentences.textContent = sentenceCount.toLocaleString();
+			statParagraphs.textContent = paragraphCount.toLocaleString();
 
 			const readingSeconds = (wordCount / 200) * 60;
 			const speakingSeconds = (wordCount / 130) * 60;
-			statReadingTime.textContent = formatDuration(readingSeconds);
-			statSpeakingTime.textContent = formatDuration(speakingSeconds);
+			const readingTime = formatDuration(readingSeconds);
+			const speakingTime = formatDuration(speakingSeconds);
+			statReadingTime.textContent = readingTime;
+			statSpeakingTime.textContent = speakingTime;
+
+			const readability = getReadability(words, sentenceCount);
+			let fleschText = '—';
+			let gradeText = '—';
+			let readabilityText = '—';
+			if (readability) {
+				const fleschClamped = Math.max(0, Math.min(100, readability.flesch));
+				fleschText = fleschClamped.toFixed(0);
+				gradeText = gradeLabel(readability.grade);
+				readabilityText = fleschLabel(readability.flesch);
+			}
+			statFlesch.textContent = fleschText;
+			statGrade.textContent = gradeText;
+			statReadabilityLabel.textContent = readabilityText;
 
 			renderKeywords(getKeywordDensity(words));
+
+			lastStats = {
+				words: wordCount,
+				charsWithSpaces,
+				charsNoSpaces,
+				sentences: sentenceCount,
+				paragraphs: paragraphCount,
+				readingTime,
+				speakingTime,
+				flesch: fleschText,
+				grade: gradeText,
+				readability: readabilityText,
+			};
 		};
 
 		textInput.addEventListener('input', updateStats);
@@ -346,6 +550,78 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '') + '/';
 			updateStats();
 		});
 
+		copyBtn.addEventListener('click', async () => {
+			const s = lastStats;
+			const summary = [
+				`Words: ${s.words.toLocaleString()}`,
+				`Characters (with spaces): ${s.charsWithSpaces.toLocaleString()}`,
+				`Characters (no spaces): ${s.charsNoSpaces.toLocaleString()}`,
+				`Sentences: ${s.sentences.toLocaleString()}`,
+				`Paragraphs: ${s.paragraphs.toLocaleString()}`,
+				`Reading time: ${s.readingTime}`,
+				`Speaking time: ${s.speakingTime}`,
+				`Flesch reading ease: ${s.flesch}`,
+				`Grade level: ${s.grade}`,
+				`Readability: ${s.readability}`,
+			].join('\n');
+
+			const original = copyBtn.textContent;
+			try {
+				if (navigator.clipboard && navigator.clipboard.writeText) {
+					await navigator.clipboard.writeText(summary);
+				} else {
+					const ta = document.createElement('textarea');
+					ta.value = summary;
+					ta.style.position = 'fixed';
+					ta.style.opacity = '0';
+					document.body.appendChild(ta);
+					ta.select();
+					document.execCommand('copy');
+					document.body.removeChild(ta);
+				}
+				copyBtn.textContent = 'Copied!';
+			} catch {
+				copyBtn.textContent = 'Copy failed';
+			}
+			setTimeout(() => {
+				copyBtn.textContent = original;
+			}, 1600);
+		});
+
 		updateStats();
+	</script>
+
+	<script>
+		(() => {
+			const cv = document.getElementById('snake-canvas') as HTMLCanvasElement | null;
+			if (!cv) return;
+			const ctx = cv.getContext('2d')!;
+			const G = 16, N = 20;
+			let snake: { x: number; y: number }[], dir: { x: number; y: number }, food: { x: number; y: number }, score: number, alive: boolean, loop: number;
+			const scoreEl = document.getElementById('snake-score');
+			function rndFood() { return { x: Math.floor(Math.random() * N), y: Math.floor(Math.random() * N) }; }
+			function reset() { snake = [{ x: 10, y: 10 }]; dir = { x: 0, y: 0 }; food = rndFood(); score = 0; alive = true; if (scoreEl) scoreEl.textContent = '0'; }
+			function step() {
+				if (!alive) return;
+				if (dir.x === 0 && dir.y === 0) { draw(); return; }
+				const h = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+				if (h.x < 0 || h.y < 0 || h.x >= N || h.y >= N || snake.some(s => s.x === h.x && s.y === h.y)) { alive = false; draw(); return; }
+				snake.unshift(h);
+				if (h.x === food.x && h.y === food.y) { score++; if (scoreEl) scoreEl.textContent = String(score); food = rndFood(); } else snake.pop();
+				draw();
+			}
+			function draw() {
+				ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cv!.width, cv!.height);
+				ctx.fillStyle = '#c9982e'; snake.forEach(s => ctx.fillRect(s.x * G + 1, s.y * G + 1, G - 2, G - 2));
+				ctx.fillStyle = '#221b10'; ctx.fillRect(food.x * G + 3, food.y * G + 3, G - 6, G - 6);
+				if (!alive) { ctx.fillStyle = 'rgba(34,27,16,0.72)'; ctx.fillRect(0, 0, cv!.width, cv!.height); ctx.fillStyle = '#fff'; ctx.font = 'bold 20px Sora, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('Game Over — Restart', cv!.width / 2, cv!.height / 2); }
+			}
+			function turn(x: number, y: number) { if ((x !== 0 && dir.x === 0) || (y !== 0 && dir.y === 0)) dir = { x, y }; }
+			window.addEventListener('keydown', e => { const k = e.key.toLowerCase(); if (['arrowup', 'w'].includes(k)) turn(0, -1); else if (['arrowdown', 's'].includes(k)) turn(0, 1); else if (['arrowleft', 'a'].includes(k)) turn(-1, 0); else if (['arrowright', 'd'].includes(k)) turn(1, 0); else return; e.preventDefault(); }, { passive: false });
+			let tx: number, ty: number; cv.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+			cv.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.abs(dx) > Math.abs(dy)) turn(dx > 0 ? 1 : -1, 0); else turn(0, dy > 0 ? 1 : -1); }, { passive: true });
+			document.getElementById('snake-restart')?.addEventListener('click', reset);
+			reset(); loop = window.setInterval(step, 110);
+		})();
 	</script>
 </Layout>

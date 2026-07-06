@@ -37,33 +37,85 @@ const canonical = new URL(
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
-			rel="stylesheet"
-		/>
+		<link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+		<style>
+			/* Reserved AdSense slots: invisible until a real <ins> is dropped in.
+			   Empty placeholder ad boxes can hurt AdSense approval, so we reserve
+			   the space and keep it visually silent (no border/label) until filled. */
+			.ad-slot:empty {
+				min-height: 0;
+			}
+			.ad-slot {
+				display: block;
+			}
+		</style>
 	</head>
-	<body class="min-h-screen bg-[#FAF6EC] font-sans text-[#5C4F3D] antialiased">
-		<header class="border-b border-[#E8DFC8]">
-			<nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
+	<body class="min-h-screen bg-[#ffffff] font-sans text-[#4a4234] antialiased">
+		<header class="border-b border-[#eae4d6]">
+			<nav class="mx-auto flex max-w-[820px] items-center justify-between px-6 py-6">
 				<a
 					href={base}
-					class="font-display text-xl font-700 tracking-tight text-[#2B2013]"
+					class="font-display text-2xl font-extrabold tracking-tight text-[#221b10]"
 				>
-					Word<span class="text-[#C9982E]">Tally</span>
+					Word<span class="text-[#c9982e]">Tally</span>
 				</a>
+				<div class="hidden items-center gap-7 text-[15px] font-medium text-[#4a4234] sm:flex">
+					<a href={base} class="transition hover:text-[#b8860b]">Counter</a>
+					<a href={`${base}about`} class="transition hover:text-[#b8860b]">About</a>
+					<a href={`${base}faq`} class="transition hover:text-[#b8860b]">FAQ</a>
+				</div>
 			</nav>
 		</header>
 
-		<main class="mx-auto max-w-5xl px-6 py-12 sm:py-16">
-			<slot />
-		</main>
+		<!-- AdSense: top leaderboard slot (paste responsive <ins class="adsbygoogle"> here) -->
+		<div
+			class="ad-slot ad-leaderboard mx-auto"
+			data-ad-slot="leaderboard"
+			style="max-width:970px;min-height:0"
+		>
+			<!-- AdSense: paste responsive <ins class="adsbygoogle"> here -->
+		</div>
 
-		<footer class="mt-24 border-t border-[#E8DFC8]">
-			<div class="mx-auto max-w-5xl px-6 py-10 text-sm text-[#5C4F3D]/80">
-				<div class="flex flex-wrap gap-6">
-					<a href={`${base}about`} class="transition hover:text-[#B8860B]">About</a>
-					<a href={`${base}privacy`} class="transition hover:text-[#B8860B]">Privacy</a>
-					<a href={`${base}faq`} class="transition hover:text-[#B8860B]">FAQ</a>
+		<!-- Ad-ready layout: [left skyscraper] [820px content] [right skyscraper].
+		     Skyscrapers only render >=1280px so they sit in the empty gutter. -->
+		<div class="relative mx-auto flex max-w-[1400px] items-start justify-center gap-8 px-6">
+			<aside
+				class="ad-slot sticky top-[120px] hidden w-[160px] shrink-0 xl:block"
+				data-ad-slot="skyscraper-left"
+				aria-hidden="true"
+			>
+				<!-- AdSense: paste responsive <ins class="adsbygoogle"> here -->
+			</aside>
+
+			<main class="mx-auto w-full max-w-[820px] px-0 pt-24 pb-28 sm:px-6">
+				<slot />
+			</main>
+
+			<aside
+				class="ad-slot sticky top-[120px] hidden w-[160px] shrink-0 xl:block"
+				data-ad-slot="skyscraper-right"
+				aria-hidden="true"
+			>
+				<!-- AdSense: paste responsive <ins class="adsbygoogle"> here -->
+			</aside>
+		</div>
+
+		<!-- AdSense: bottom in-article slot (paste responsive <ins class="adsbygoogle"> here) -->
+		<div
+			class="ad-slot ad-in-article mx-auto"
+			data-ad-slot="in-article"
+			style="max-width:728px;min-height:0"
+		>
+			<!-- AdSense: paste responsive <ins class="adsbygoogle"> here -->
+		</div>
+
+		<footer class="mt-24 border-t border-[#eae4d6]">
+			<div class="mx-auto max-w-[820px] px-6 py-12 text-[15px] text-[#8a7e68]">
+				<div class="flex flex-wrap gap-7">
+					<a href={`${base}about`} class="transition hover:text-[#b8860b]">About</a>
+					<a href={`${base}privacy`} class="transition hover:text-[#b8860b]">Privacy</a>
+					<a href={`${base}faq`} class="transition hover:text-[#b8860b]">FAQ</a>
 				</div>
 				<p class="mt-6">
 					Everything runs locally in your browser. Nothing you type is ever sent
